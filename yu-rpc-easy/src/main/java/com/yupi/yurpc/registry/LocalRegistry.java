@@ -15,6 +15,8 @@ public class LocalRegistry {
     /**
      * 注册信息存储
      */
+    //ConcurrentHashMap 在多线程环境下是线程安全的，但是ConcurrentHashMap中的迭代器不是线程安全的。
+    // 因此，在需要使用迭代器的情况下，请谨慎使用。
     private static final Map<String, Class<?>> map = new ConcurrentHashMap<>();
 
     /**

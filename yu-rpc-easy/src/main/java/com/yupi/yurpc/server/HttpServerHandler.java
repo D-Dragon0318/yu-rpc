@@ -30,7 +30,7 @@ public class HttpServerHandler implements Handler<HttpServerRequest> {
         // 记录日志
         System.out.println("Received request: " + request.method() + " " + request.uri());
 
-        // 异步处理 HTTP 请求
+        // 异步处理 HTTP 请求 ，调用bodyHandler方法来处理请求体
         request.bodyHandler(body -> {
             byte[] bytes = body.getBytes();
             RpcRequest rpcRequest = null;
@@ -52,11 +52,15 @@ public class HttpServerHandler implements Handler<HttpServerRequest> {
             try {
                 // 获取要调用的服务实现类，通过反射调用
                 Class<?> implClass = LocalRegistry.get(rpcRequest.getServiceName());
+                //根据方法名和参数类型获取方法
                 Method method = implClass.getMethod(rpcRequest.getMethodName(), rpcRequest.getParameterTypes());
+                //调用方法返回结果
                 Object result = method.invoke(implClass.newInstance(), rpcRequest.getArgs());
                 // 封装返回结果
                 rpcResponse.setData(result);
+                //返回类型
                 rpcResponse.setDataType(method.getReturnType());
+                //返回状态码
                 rpcResponse.setMessage("ok");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -77,6 +81,7 @@ public class HttpServerHandler implements Handler<HttpServerRequest> {
      */
     void doResponse(HttpServerRequest request, RpcResponse rpcResponse, Serializer serializer) {
         HttpServerResponse httpServerResponse = request.response()
+                //响应的内容是json
                 .putHeader("content-type", "application/json");
         try {
             // 序列化

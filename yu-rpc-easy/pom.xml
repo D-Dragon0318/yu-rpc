@@ -10,6 +10,7 @@
 
     <dependencies>
         <!-- https://mvnrepository.com/artifact/io.vertx/vertx-core -->
+        <!-- 引入vert.x核心包 -->
         <dependency>
             <groupId>io.vertx</groupId>
             <artifactId>vertx-core</artifactId>
@@ -19,7 +20,7 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>5.8.16</version>
+            <version>5.8.25</version>
         </dependency>
         <!-- https://projectlombok.org/ -->
         <dependency>

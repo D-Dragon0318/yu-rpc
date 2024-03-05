@@ -15,6 +15,7 @@ import java.io.Serializable;
  * @from <a href="https://yupi.icu">编程导航知识星球</a>
  */
 @Data
+//告诉编译器，这个类将使用构建者模式来创建对象。
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
